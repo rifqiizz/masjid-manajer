@@ -12,6 +12,8 @@ import {
   BarChart3,
   Shield,
   LogOut,
+  Users,
+  UserCog,
 } from "lucide-react";
 import mosqueLogo from "@/assets/mosque-logo.png";
 import { NavLink } from "@/components/NavLink";
@@ -20,37 +22,44 @@ const menuGroups = [
   {
     label: "Utama",
     items: [
-      { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
-      { title: "Profil Masjid", url: "/profil-masjid", icon: Building2 },
+      { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard, iconColor: "text-blue-500" },
+      { title: "Profil Masjid", url: "/profil-masjid", icon: Building2, iconColor: "text-amber-600" },
     ],
   },
   {
     label: "Konten",
     items: [
-      { title: "Artikel", url: "/artikel", icon: FileText },
-      { title: "Postingan", url: "/postingan", icon: Megaphone },
+      { title: "Artikel", url: "/artikel", icon: FileText, iconColor: "text-emerald-500" },
+      { title: "Postingan", url: "/postingan", icon: Megaphone, iconColor: "text-orange-500" },
     ],
   },
   {
     label: "Operasional",
     items: [
-      { title: "Kegiatan", url: "/kegiatan", icon: CalendarDays },
-      { title: "Ruangan", url: "/ruangan", icon: DoorOpen },
-      { title: "Sewa", url: "/sewa", icon: KeyRound },
-      { title: "Fasilitas", url: "/fasilitas", icon: Wrench },
+      { title: "Kegiatan", url: "/kegiatan", icon: CalendarDays, iconColor: "text-purple-500" },
+      { title: "Ruangan", url: "/ruangan", icon: DoorOpen, iconColor: "text-cyan-500" },
+      { title: "Sewa", url: "/sewa", icon: KeyRound, iconColor: "text-yellow-500" },
+      { title: "Fasilitas", url: "/fasilitas", icon: Wrench, iconColor: "text-slate-500" },
     ],
   },
   {
     label: "Keuangan",
     items: [
-      { title: "Keuangan", url: "/keuangan", icon: Wallet },
-      { title: "Laporan", url: "/laporan", icon: BarChart3 },
+      { title: "Keuangan", url: "/keuangan", icon: Wallet, iconColor: "text-green-500" },
+      { title: "Laporan", url: "/laporan", icon: BarChart3, iconColor: "text-indigo-500" },
+    ],
+  },
+  {
+    label: "Data & Pengguna",
+    items: [
+      { title: "Jamaah", url: "/jamaah", icon: Users, iconColor: "text-teal-500" },
+      { title: "Manajemen User", url: "/users", icon: UserCog, iconColor: "text-rose-500" },
     ],
   },
   {
     label: "Sistem",
     items: [
-      { title: "Audit Trail", url: "/audit-trail", icon: Shield },
+      { title: "Audit Trail", url: "/audit-trail", icon: Shield, iconColor: "text-red-500" },
     ],
   },
 ];
@@ -90,7 +99,7 @@ const AppSidebar = () => {
                       }`}
                       activeClassName="bg-sidebar-accent text-sidebar-accent-foreground font-medium"
                     >
-                      <item.icon className="h-4 w-4 shrink-0" />
+                      <item.icon className={`h-4 w-4 shrink-0 ${item.iconColor}`} />
                       <span>{item.title}</span>
                     </NavLink>
                   </li>
@@ -107,7 +116,7 @@ const AppSidebar = () => {
           onClick={() => navigate("/")}
           className="flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-foreground transition-colors"
         >
-          <LogOut className="h-4 w-4" />
+          <LogOut className="h-4 w-4 text-gray-400" />
           <span>Keluar</span>
         </button>
       </div>

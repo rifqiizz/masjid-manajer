@@ -16,6 +16,8 @@ import Fasilitas from "./pages/Fasilitas";
 import Keuangan from "./pages/Keuangan";
 import Laporan from "./pages/Laporan";
 import AuditTrail from "./pages/AuditTrail";
+import Jamaah from "./pages/Jamaah";
+import Users from "./pages/Users";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -40,6 +42,8 @@ const App = () => (
             <Route path="/keuangan" element={<Keuangan />} />
             <Route path="/laporan" element={<Laporan />} />
             <Route path="/audit-trail" element={<AuditTrail />} />
+            <Route path="/jamaah" element={<Jamaah />} />
+            <Route path="/users" element={<Users />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
