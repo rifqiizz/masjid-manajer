@@ -12,6 +12,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Wrench, Plus, Pencil, Trash2, Search, AlertTriangle, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import fasilitasHero from "@/assets/fasilitas-hero.jpg";
 
 interface Fasilitas {
   id: number;
@@ -39,7 +40,7 @@ const kondisiOptions = [
   { value: "dalam_perbaikan", label: "Dalam Perbaikan" },
 ];
 
-const Fasilitas = () => {
+const FasilitasPage = () => {
   const { toast } = useToast();
   const [fasilitas, setFasilitas] = useState<Fasilitas[]>(initialFasilitas);
   const [search, setSearch] = useState("");
@@ -131,14 +132,26 @@ const Fasilitas = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
-            <Wrench className="h-6 w-6 text-slate-500" />
-            Manajemen Fasilitas
-          </h1>
-          <p className="text-muted-foreground">Status fasilitas aktif dan catatan perawatan</p>
+      {/* Hero Image */}
+      <div className="relative h-40 rounded-lg overflow-hidden">
+        <img
+          src={fasilitasHero}
+          alt="Fasilitas Masjid"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/80 to-transparent flex items-center">
+          <div className="px-6">
+            <h1 className="text-2xl font-bold text-white flex items-center gap-2">
+              <Wrench className="h-6 w-6" />
+              Manajemen Fasilitas
+            </h1>
+            <p className="text-white/80 text-sm mt-1">Status fasilitas aktif dan catatan perawatan</p>
+          </div>
         </div>
+      </div>
+
+      <div className="flex items-center justify-between">
+        <div></div>
         <Dialog open={dialogOpen} onOpenChange={(open) => { setDialogOpen(open); if (!open) resetForm(); }}>
           <DialogTrigger asChild>
             <Button className="gap-2">
@@ -235,9 +248,9 @@ const Fasilitas = () => {
       </div>
 
       {needsAttention > 0 && (
-        <Card className="border-orange-500/50 bg-orange-50/50">
+        <Card className="border-orange-500/50 bg-orange-500/5">
           <CardContent className="pt-6">
-            <div className="flex items-center gap-2 text-orange-700">
+            <div className="flex items-center gap-2 text-orange-600">
               <AlertTriangle className="h-5 w-5" />
               <span className="font-medium">{needsAttention} fasilitas perlu perhatian</span>
             </div>
@@ -324,4 +337,4 @@ const Fasilitas = () => {
   );
 };
 
-export default Fasilitas;
+export default FasilitasPage;

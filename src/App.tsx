@@ -11,7 +11,7 @@ import Artikel from "./pages/Artikel";
 import Postingan from "./pages/Postingan";
 import Kegiatan from "./pages/Kegiatan";
 import Ruangan from "./pages/Ruangan";
-import Sewa from "./pages/Sewa";
+import Reservasi from "./pages/Reservasi";
 import Fasilitas from "./pages/Fasilitas";
 import Keuangan from "./pages/Keuangan";
 import Laporan from "./pages/Laporan";
@@ -37,7 +37,7 @@ const App = () => (
             <Route path="/postingan" element={<Postingan />} />
             <Route path="/kegiatan" element={<Kegiatan />} />
             <Route path="/ruangan" element={<Ruangan />} />
-            <Route path="/sewa" element={<Sewa />} />
+            <Route path="/reservasi" element={<Reservasi />} />
             <Route path="/fasilitas" element={<Fasilitas />} />
             <Route path="/keuangan" element={<Keuangan />} />
             <Route path="/laporan" element={<Laporan />} />

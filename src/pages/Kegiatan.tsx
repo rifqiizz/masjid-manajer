@@ -11,6 +11,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { CalendarDays, Plus, Pencil, Trash2, Search, Clock, User } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import kegiatanHero from "@/assets/kegiatan-hero.jpg";
 
 interface Kegiatan {
   id: number;
@@ -32,7 +33,7 @@ const initialKegiatan: Kegiatan[] = [
 
 const statusOptions = ["dijadwalkan", "berlangsung", "selesai", "dibatalkan"] as const;
 
-const Kegiatan = () => {
+const KegiatanPage = () => {
   const { toast } = useToast();
   const [kegiatan, setKegiatan] = useState<Kegiatan[]>(initialKegiatan);
   const [search, setSearch] = useState("");
@@ -116,14 +117,26 @@ const Kegiatan = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
-            <CalendarDays className="h-6 w-6 text-purple-500" />
-            Manajemen Kegiatan
-          </h1>
-          <p className="text-muted-foreground">Jadwal kegiatan, penanggung jawab, dan status pelaksanaan</p>
+      {/* Hero Image */}
+      <div className="relative h-40 rounded-lg overflow-hidden">
+        <img
+          src={kegiatanHero}
+          alt="Kegiatan Masjid"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/80 to-transparent flex items-center">
+          <div className="px-6">
+            <h1 className="text-2xl font-bold text-white flex items-center gap-2">
+              <CalendarDays className="h-6 w-6" />
+              Manajemen Kegiatan
+            </h1>
+            <p className="text-white/80 text-sm mt-1">Jadwal kegiatan, penanggung jawab, dan status pelaksanaan</p>
+          </div>
         </div>
+      </div>
+
+      <div className="flex items-center justify-between">
+        <div></div>
         <Dialog open={dialogOpen} onOpenChange={(open) => { setDialogOpen(open); if (!open) resetForm(); }}>
           <DialogTrigger asChild>
             <Button className="gap-2">
@@ -295,4 +308,4 @@ const Kegiatan = () => {
   );
 };
 
-export default Kegiatan;
+export default KegiatanPage;

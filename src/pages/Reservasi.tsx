@@ -9,10 +9,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "@/components/ui/dialog";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
-import { KeyRound, Plus, Pencil, Trash2, Search, Check, X, Clock, AlertTriangle } from "lucide-react";
+import { CalendarCheck, Plus, Pencil, Trash2, Search, Check, X, Clock, AlertTriangle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
-interface Sewa {
+interface Reservasi {
   id: number;
   penyewa: string;
   telepon: string;
@@ -27,7 +27,7 @@ interface Sewa {
   totalBiaya: number;
 }
 
-const initialSewa: Sewa[] = [
+const initialReservasi: Reservasi[] = [
   { id: 1, penyewa: "PT ABC Indonesia", telepon: "081234567890", ruangan: "Aula Utama", tanggalMulai: "2026-02-15", tanggalSelesai: "2026-02-15", waktuMulai: "08:00", waktuSelesai: "17:00", keperluan: "Seminar Perusahaan", status: "pending", catatan: "", totalBiaya: 2500000 },
   { id: 2, penyewa: "Yayasan Pendidikan XYZ", telepon: "081298765432", ruangan: "Ruang Kelas 1", tanggalMulai: "2026-02-20", tanggalSelesai: "2026-02-22", waktuMulai: "09:00", waktuSelesai: "15:00", keperluan: "Pelatihan Guru", status: "disetujui", catatan: "Sudah DP 50%", totalBiaya: 900000 },
   { id: 3, penyewa: "Komunitas Pemuda", telepon: "085678901234", ruangan: "Aula Utama", tanggalMulai: "2026-02-10", tanggalSelesai: "2026-02-10", waktuMulai: "19:00", waktuSelesai: "22:00", keperluan: "Acara Kebersamaan", status: "ditolak", catatan: "Bentrok dengan kajian rutin", totalBiaya: 2500000 },
@@ -35,12 +35,12 @@ const initialSewa: Sewa[] = [
 
 const ruanganOptions = ["Aula Utama", "Ruang Rapat", "Ruang Kelas 1", "Ruang Kelas 2"];
 
-const Sewa = () => {
+const ReservasiPage = () => {
   const { toast } = useToast();
-  const [sewa, setSewa] = useState<Sewa[]>(initialSewa);
+  const [reservasi, setReservasi] = useState<Reservasi[]>(initialReservasi);
   const [search, setSearch] = useState("");
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [selectedSewa, setSelectedSewa] = useState<Sewa | null>(null);
+  const [selectedReservasi, setSelectedReservasi] = useState<Reservasi | null>(null);
   const [formData, setFormData] = useState({
     penyewa: "",
     telepon: "",
@@ -54,20 +54,20 @@ const Sewa = () => {
     totalBiaya: 0,
   });
 
-  const filteredSewa = sewa.filter(
+  const filteredReservasi = reservasi.filter(
     (s) =>
       s.penyewa.toLowerCase().includes(search.toLowerCase()) ||
       s.ruangan.toLowerCase().includes(search.toLowerCase())
   );
 
-  const checkConflict = (newSewa: typeof formData, excludeId?: number) => {
-    return sewa.some((s) => {
+  const checkConflict = (newReservasi: typeof formData, excludeId?: number) => {
+    return reservasi.some((s) => {
       if (excludeId && s.id === excludeId) return false;
       if (s.status === "ditolak") return false;
-      if (s.ruangan !== newSewa.ruangan) return false;
+      if (s.ruangan !== newReservasi.ruangan) return false;
       
-      const newStart = new Date(`${newSewa.tanggalMulai}T${newSewa.waktuMulai}`);
-      const newEnd = new Date(`${newSewa.tanggalSelesai}T${newSewa.waktuSelesai}`);
+      const newStart = new Date(`${newReservasi.tanggalMulai}T${newReservasi.waktuMulai}`);
+      const newEnd = new Date(`${newReservasi.tanggalSelesai}T${newReservasi.waktuSelesai}`);
       const existStart = new Date(`${s.tanggalMulai}T${s.waktuMulai}`);
       const existEnd = new Date(`${s.tanggalSelesai}T${s.waktuSelesai}`);
       
@@ -76,42 +76,42 @@ const Sewa = () => {
   };
 
   const handleSave = () => {
-    const hasConflict = checkConflict(formData, selectedSewa?.id);
+    const hasConflict = checkConflict(formData, selectedReservasi?.id);
     if (hasConflict) {
       toast({ title: "Jadwal bentrok!", description: "Ruangan sudah dipesan pada waktu tersebut", variant: "destructive" });
       return;
     }
 
-    if (selectedSewa) {
-      setSewa(sewa.map((s) =>
-        s.id === selectedSewa.id ? { ...s, ...formData, status: s.status } : s
+    if (selectedReservasi) {
+      setReservasi(reservasi.map((s) =>
+        s.id === selectedReservasi.id ? { ...s, ...formData, status: s.status } : s
       ));
-      toast({ title: "Data sewa diperbarui" });
+      toast({ title: "Data reservasi diperbarui" });
     } else {
-      const newSewa: Sewa = {
+      const newReservasi: Reservasi = {
         id: Date.now(),
         ...formData,
         status: "pending",
       };
-      setSewa([newSewa, ...sewa]);
-      toast({ title: "Permohonan sewa ditambahkan" });
+      setReservasi([newReservasi, ...reservasi]);
+      toast({ title: "Permohonan reservasi ditambahkan" });
     }
     setDialogOpen(false);
     resetForm();
   };
 
   const handleApprove = (id: number) => {
-    setSewa(sewa.map((s) => s.id === id ? { ...s, status: "disetujui" } : s));
-    toast({ title: "Sewa disetujui" });
+    setReservasi(reservasi.map((s) => s.id === id ? { ...s, status: "disetujui" } : s));
+    toast({ title: "Reservasi disetujui" });
   };
 
   const handleReject = (id: number, catatan: string) => {
-    setSewa(sewa.map((s) => s.id === id ? { ...s, status: "ditolak", catatan } : s));
-    toast({ title: "Sewa ditolak", variant: "destructive" });
+    setReservasi(reservasi.map((s) => s.id === id ? { ...s, status: "ditolak", catatan } : s));
+    toast({ title: "Reservasi ditolak", variant: "destructive" });
   };
 
-  const handleEdit = (s: Sewa) => {
-    setSelectedSewa(s);
+  const handleEdit = (s: Reservasi) => {
+    setSelectedReservasi(s);
     setFormData({
       penyewa: s.penyewa,
       telepon: s.telepon,
@@ -128,12 +128,12 @@ const Sewa = () => {
   };
 
   const handleDelete = (id: number) => {
-    setSewa(sewa.filter((s) => s.id !== id));
-    toast({ title: "Data sewa dihapus", variant: "destructive" });
+    setReservasi(reservasi.filter((s) => s.id !== id));
+    toast({ title: "Data reservasi dihapus", variant: "destructive" });
   };
 
   const resetForm = () => {
-    setSelectedSewa(null);
+    setSelectedReservasi(null);
     setFormData({
       penyewa: "",
       telepon: "",
@@ -148,7 +148,7 @@ const Sewa = () => {
     });
   };
 
-  const getStatusBadge = (status: Sewa["status"]) => {
+  const getStatusBadge = (status: Reservasi["status"]) => {
     const config = {
       pending: { variant: "secondary" as const, label: "Pending", icon: Clock },
       disetujui: { variant: "default" as const, label: "Disetujui", icon: Check },
@@ -167,15 +167,15 @@ const Sewa = () => {
   const formatRupiah = (num: number) =>
     new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", minimumFractionDigits: 0 }).format(num);
 
-  const pendingCount = sewa.filter((s) => s.status === "pending").length;
+  const pendingCount = reservasi.filter((s) => s.status === "pending").length;
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
-            <KeyRound className="h-6 w-6 text-yellow-500" />
-            Manajemen Sewa
+            <CalendarCheck className="h-6 w-6 text-yellow-500" />
+            Manajemen Reservasi
           </h1>
           <p className="text-muted-foreground">Approval, kalender booking, dan deteksi bentrok jadwal</p>
         </div>
@@ -183,12 +183,12 @@ const Sewa = () => {
           <DialogTrigger asChild>
             <Button className="gap-2">
               <Plus className="h-4 w-4" />
-              Tambah Sewa
+              Tambah Reservasi
             </Button>
           </DialogTrigger>
           <DialogContent className="max-w-lg">
             <DialogHeader>
-              <DialogTitle>{selectedSewa ? "Edit Data Sewa" : "Tambah Permohonan Sewa"}</DialogTitle>
+              <DialogTitle>{selectedReservasi ? "Edit Data Reservasi" : "Tambah Permohonan Reservasi"}</DialogTitle>
             </DialogHeader>
             <div className="space-y-4 py-4 max-h-[60vh] overflow-y-auto">
               <div className="space-y-2">
@@ -299,11 +299,11 @@ const Sewa = () => {
       </div>
 
       {pendingCount > 0 && (
-        <Card className="border-yellow-500/50 bg-yellow-50/50">
+        <Card className="border-yellow-500/50 bg-yellow-500/5">
           <CardContent className="pt-6">
-            <div className="flex items-center gap-2 text-yellow-700">
+            <div className="flex items-center gap-2 text-yellow-600">
               <AlertTriangle className="h-5 w-5" />
-              <span className="font-medium">{pendingCount} permohonan sewa menunggu persetujuan</span>
+              <span className="font-medium">{pendingCount} permohonan reservasi menunggu persetujuan</span>
             </div>
           </CardContent>
         </Card>
@@ -338,7 +338,7 @@ const Sewa = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {filteredSewa.map((s) => (
+              {filteredReservasi.map((s) => (
                 <TableRow key={s.id}>
                   <TableCell>
                     <div>
@@ -395,9 +395,9 @@ const Sewa = () => {
                         </AlertDialogTrigger>
                         <AlertDialogContent>
                           <AlertDialogHeader>
-                            <AlertDialogTitle>Hapus Data Sewa?</AlertDialogTitle>
+                            <AlertDialogTitle>Hapus Data Reservasi?</AlertDialogTitle>
                             <AlertDialogDescription>
-                              Data sewa "{s.penyewa}" akan dihapus permanen.
+                              Data reservasi "{s.penyewa}" akan dihapus permanen.
                             </AlertDialogDescription>
                           </AlertDialogHeader>
                           <AlertDialogFooter>
@@ -418,4 +418,4 @@ const Sewa = () => {
   );
 };
 
-export default Sewa;
+export default ReservasiPage;
