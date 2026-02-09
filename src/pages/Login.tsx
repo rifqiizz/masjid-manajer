@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import mosqueLogo from "@/assets/mosque-logo.png";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -29,8 +28,11 @@ const Login = () => {
     <div className="flex min-h-screen items-center justify-center bg-muted px-4">
       <Card className="w-full max-w-md shadow-lg border-0">
         <CardHeader className="items-center pb-2 pt-8">
-          <img src={mosqueLogo} alt="Logo Masjid" className="h-20 w-20 mb-3" />
-          <h1 className="text-xl font-bold text-foreground">Sistem Informasi DKM</h1>
+          {/* Gold circular logo with N */}
+          <div className="h-20 w-20 rounded-full bg-gradient-to-br from-yellow-400 to-amber-600 flex items-center justify-center shadow-lg mb-3">
+            <span className="text-white font-bold text-4xl">N</span>
+          </div>
+          <h1 className="text-xl font-bold text-foreground">Masjid Nuruzzaman</h1>
           <p className="text-sm text-muted-foreground">Masuk ke panel administrasi</p>
         </CardHeader>
         <CardContent className="px-8 pb-8">

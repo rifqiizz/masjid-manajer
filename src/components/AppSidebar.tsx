@@ -6,7 +6,7 @@ import {
   Megaphone,
   CalendarDays,
   DoorOpen,
-  KeyRound,
+  CalendarCheck,
   Wrench,
   Wallet,
   BarChart3,
@@ -15,7 +15,6 @@ import {
   Users,
   UserCog,
 } from "lucide-react";
-import mosqueLogo from "@/assets/mosque-logo.png";
 import { NavLink } from "@/components/NavLink";
 
 const menuGroups = [
@@ -38,7 +37,7 @@ const menuGroups = [
     items: [
       { title: "Kegiatan", url: "/kegiatan", icon: CalendarDays, iconColor: "text-purple-500" },
       { title: "Ruangan", url: "/ruangan", icon: DoorOpen, iconColor: "text-cyan-500" },
-      { title: "Sewa", url: "/sewa", icon: KeyRound, iconColor: "text-yellow-500" },
+      { title: "Reservasi", url: "/reservasi", icon: CalendarCheck, iconColor: "text-yellow-500" },
       { title: "Fasilitas", url: "/fasilitas", icon: Wrench, iconColor: "text-slate-500" },
     ],
   },
@@ -72,9 +71,12 @@ const AppSidebar = () => {
     <aside className="flex h-screen w-60 flex-col bg-sidebar text-sidebar-foreground border-r border-sidebar-border">
       {/* Header */}
       <div className="flex items-center gap-3 px-5 py-5 border-b border-sidebar-border">
-        <img src={mosqueLogo} alt="Logo" className="h-9 w-9" />
+        {/* Gold circular logo with N */}
+        <div className="h-9 w-9 rounded-full bg-gradient-to-br from-yellow-400 to-amber-600 flex items-center justify-center shadow-md">
+          <span className="text-white font-bold text-lg">N</span>
+        </div>
         <div>
-          <h2 className="text-sm font-bold text-sidebar-foreground">DKM Masjid</h2>
+          <h2 className="text-sm font-bold text-sidebar-foreground">Masjid Nuruzzaman</h2>
           <p className="text-xs text-sidebar-primary">Panel Admin</p>
         </div>
       </div>
