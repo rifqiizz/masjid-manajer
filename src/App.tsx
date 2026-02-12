@@ -12,9 +12,13 @@ import Postingan from "./pages/Postingan";
 import Kegiatan from "./pages/Kegiatan";
 import Ruangan from "./pages/Ruangan";
 import Reservasi from "./pages/Reservasi";
+import JadwalReservasi from "./pages/JadwalReservasi";
 import Fasilitas from "./pages/Fasilitas";
-import Keuangan from "./pages/Keuangan";
+import Pemasukan from "./pages/Pemasukan";
+import Pengeluaran from "./pages/Pengeluaran";
 import Laporan from "./pages/Laporan";
+import LaporanOperasional from "./pages/LaporanOperasional";
+import LaporanEksekutif from "./pages/LaporanEksekutif";
 import AuditTrail from "./pages/AuditTrail";
 import Jamaah from "./pages/Jamaah";
 import Users from "./pages/Users";
@@ -38,9 +42,13 @@ const App = () => (
             <Route path="/kegiatan" element={<Kegiatan />} />
             <Route path="/ruangan" element={<Ruangan />} />
             <Route path="/reservasi" element={<Reservasi />} />
+            <Route path="/jadwal-reservasi" element={<JadwalReservasi />} />
             <Route path="/fasilitas" element={<Fasilitas />} />
-            <Route path="/keuangan" element={<Keuangan />} />
+            <Route path="/pemasukan" element={<Pemasukan />} />
+            <Route path="/pengeluaran" element={<Pengeluaran />} />
             <Route path="/laporan" element={<Laporan />} />
+            <Route path="/laporan-operasional" element={<LaporanOperasional />} />
+            <Route path="/laporan-eksekutif" element={<LaporanEksekutif />} />
             <Route path="/audit-trail" element={<AuditTrail />} />
             <Route path="/jamaah" element={<Jamaah />} />
             <Route path="/users" element={<Users />} />
