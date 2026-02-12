@@ -16,6 +16,7 @@ import {
   UserCog,
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
+import logoNuruzzaman from "@/assets/logo-nuruzzaman.png";
 
 const menuGroups = [
   {
@@ -71,10 +72,7 @@ const AppSidebar = () => {
     <aside className="flex h-screen w-60 flex-col bg-sidebar text-sidebar-foreground border-r border-sidebar-border">
       {/* Header */}
       <div className="flex items-center gap-3 px-5 py-5 border-b border-sidebar-border">
-        {/* Gold circular logo with N */}
-        <div className="h-9 w-9 rounded-full bg-gradient-to-br from-yellow-400 to-amber-600 flex items-center justify-center shadow-md">
-          <span className="text-white font-bold text-lg">N</span>
-        </div>
+        <img src={logoNuruzzaman} alt="Logo Masjid Nuruzzaman" className="h-9 w-9" />
         <div>
           <h2 className="text-sm font-bold text-sidebar-foreground">Masjid Nuruzzaman</h2>
           <p className="text-xs text-sidebar-primary">Panel Admin</p>
