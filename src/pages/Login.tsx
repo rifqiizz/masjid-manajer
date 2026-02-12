@@ -44,7 +44,7 @@ const Login = () => {
   return (
     <div
       className="flex min-h-screen items-center justify-center bg-muted px-4"
-      style={{ backgroundImage: `url(${bgPattern})`, backgroundRepeat: "repeat" }}
+      style={{ backgroundImage: `url(${bgPattern})`, backgroundRepeat: "repeat", backgroundColor: "currentcolor" }}
     >
       <Card className="w-full max-w-md shadow-lg border-0">
         <CardHeader className="items-center pb-2 pt-8">
