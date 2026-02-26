@@ -2,8 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
   Building2,
-  FileText,
-  Megaphone,
+  ExternalLink,
   CalendarDays,
   DoorOpen,
   CalendarCheck,
@@ -33,8 +32,7 @@ const menuGroups = [
   {
     label: "Konten",
     items: [
-      { title: "Artikel", url: "/artikel", icon: FileText, iconColor: "text-emerald-500" },
-      { title: "Postingan", url: "/postingan", icon: Megaphone, iconColor: "text-orange-500" },
+      { title: "Kelola Postingan", url: "https://masjidnz.gt.tc/", icon: ExternalLink, iconColor: "text-emerald-500", external: true },
     ],
   },
   {
@@ -96,11 +94,27 @@ const AppSidebar = () => {
       <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-5">
         {menuGroups.map((group) => (
           <div key={group.label}>
-            <p className="mb-2 px-2 text-[11px] font-semibold uppercase tracking-wider text-sidebar-primary/60">
+            <p className="mb-2 px-2 text-[11px] font-semibold uppercase tracking-wider text-sidebar-foreground/50">
               {group.label}
             </p>
             <ul className="space-y-0.5">
               {group.items.map((item) => {
+                const isExternal = (item as any).external;
+                if (isExternal) {
+                  return (
+                    <li key={item.url}>
+                      <a
+                        href={item.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors hover:bg-sidebar-accent text-sidebar-foreground"
+                      >
+                        <item.icon className={`h-4 w-4 shrink-0 ${item.iconColor}`} />
+                        <span>{item.title}</span>
+                      </a>
+                    </li>
+                  );
+                }
                 const isActive = location.pathname === item.url;
                 return (
                   <li key={item.url}>
@@ -108,7 +122,7 @@ const AppSidebar = () => {
                       to={item.url}
                       end
                       className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors hover:bg-sidebar-accent ${
-                        isActive ? "" : ""
+                        isActive ? "" : "text-sidebar-foreground"
                       }`}
                       activeClassName="bg-sidebar-accent text-sidebar-accent-foreground font-medium"
                     >
@@ -127,9 +141,9 @@ const AppSidebar = () => {
       <div className="border-t border-sidebar-border p-3">
         <button
           onClick={() => navigate("/")}
-          className="flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-foreground transition-colors"
+          className="flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm text-sidebar-foreground/60 hover:bg-sidebar-accent hover:text-sidebar-foreground transition-colors"
         >
-          <LogOut className="h-4 w-4 text-gray-400" />
+          <LogOut className="h-4 w-4 text-sidebar-foreground/40" />
           <span>Keluar</span>
         </button>
       </div>
