@@ -22,6 +22,7 @@ import LaporanEksekutif from "./pages/LaporanEksekutif";
 import AuditTrail from "./pages/AuditTrail";
 import Jamaah from "./pages/Jamaah";
 import Users from "./pages/Users";
+import Tugas from "./pages/Tugas";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -40,6 +41,7 @@ const App = () => (
             <Route path="/artikel" element={<Artikel />} />
             <Route path="/postingan" element={<Postingan />} />
             <Route path="/kegiatan" element={<Kegiatan />} />
+            <Route path="/tugas" element={<Tugas />} />
             <Route path="/ruangan" element={<Ruangan />} />
             <Route path="/reservasi" element={<Reservasi />} />
             <Route path="/jadwal-reservasi" element={<JadwalReservasi />} />
