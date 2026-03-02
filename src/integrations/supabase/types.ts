@@ -14,6 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
+      audit_logs: {
+        Row: {
+          action: string
+          created_at: string
+          detail: string | null
+          id: string
+          ip_address: string | null
+          metadata: Json | null
+          module: string
+          user_id: string | null
+        }
+        Insert: {
+          action: string
+          created_at?: string
+          detail?: string | null
+          id?: string
+          ip_address?: string | null
+          metadata?: Json | null
+          module: string
+          user_id?: string | null
+        }
+        Update: {
+          action?: string
+          created_at?: string
+          detail?: string | null
+          id?: string
+          ip_address?: string | null
+          metadata?: Json | null
+          module?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       chart_of_accounts: {
         Row: {
           account_type: string
@@ -51,6 +84,53 @@ export type Database = {
             columns: ["parent_id"]
             isOneToOne: false
             referencedRelation: "chart_of_accounts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      fasilitas: {
+        Row: {
+          catatan_perawatan: string | null
+          created_at: string
+          id: string
+          is_active: boolean
+          kategori: string | null
+          kondisi: Database["public"]["Enums"]["kondisi_aset"]
+          nama: string
+          ruangan_id: string | null
+          tanggal_perawatan: string | null
+          updated_at: string
+        }
+        Insert: {
+          catatan_perawatan?: string | null
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          kategori?: string | null
+          kondisi?: Database["public"]["Enums"]["kondisi_aset"]
+          nama: string
+          ruangan_id?: string | null
+          tanggal_perawatan?: string | null
+          updated_at?: string
+        }
+        Update: {
+          catatan_perawatan?: string | null
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          kategori?: string | null
+          kondisi?: Database["public"]["Enums"]["kondisi_aset"]
+          nama?: string
+          ruangan_id?: string | null
+          tanggal_perawatan?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fasilitas_ruangan_id_fkey"
+            columns: ["ruangan_id"]
+            isOneToOne: false
+            referencedRelation: "ruangan"
             referencedColumns: ["id"]
           },
         ]
@@ -173,6 +253,94 @@ export type Database = {
           },
         ]
       }
+      kegiatan: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          deskripsi: string | null
+          id: string
+          nama: string
+          penanggung_jawab: string | null
+          room_id: string | null
+          status: Database["public"]["Enums"]["kegiatan_status"]
+          tanggal: string
+          updated_at: string
+          waktu_mulai: string
+          waktu_selesai: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          deskripsi?: string | null
+          id?: string
+          nama: string
+          penanggung_jawab?: string | null
+          room_id?: string | null
+          status?: Database["public"]["Enums"]["kegiatan_status"]
+          tanggal: string
+          updated_at?: string
+          waktu_mulai: string
+          waktu_selesai: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          deskripsi?: string | null
+          id?: string
+          nama?: string
+          penanggung_jawab?: string | null
+          room_id?: string | null
+          status?: Database["public"]["Enums"]["kegiatan_status"]
+          tanggal?: string
+          updated_at?: string
+          waktu_mulai?: string
+          waktu_selesai?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "kegiatan_room_id_fkey"
+            columns: ["room_id"]
+            isOneToOne: false
+            referencedRelation: "ruangan"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      mosque_gallery: {
+        Row: {
+          caption: string | null
+          created_at: string
+          id: string
+          image_url: string
+          mosque_profile_id: string
+          sort_order: number
+        }
+        Insert: {
+          caption?: string | null
+          created_at?: string
+          id?: string
+          image_url: string
+          mosque_profile_id: string
+          sort_order?: number
+        }
+        Update: {
+          caption?: string | null
+          created_at?: string
+          id?: string
+          image_url?: string
+          mosque_profile_id?: string
+          sort_order?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mosque_gallery_mosque_profile_id_fkey"
+            columns: ["mosque_profile_id"]
+            isOneToOne: false
+            referencedRelation: "mosque_profile"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       mosque_profile: {
         Row: {
           address: string | null
@@ -180,9 +348,13 @@ export type Database = {
           description: string | null
           email: string | null
           id: string
+          jam_operasional: string | null
+          kapasitas_jamaah: number | null
           logo_url: string | null
+          luas_bangunan: string | null
           name: string
           phone: string | null
+          tahun_berdiri: number | null
           updated_at: string
         }
         Insert: {
@@ -191,9 +363,13 @@ export type Database = {
           description?: string | null
           email?: string | null
           id?: string
+          jam_operasional?: string | null
+          kapasitas_jamaah?: number | null
           logo_url?: string | null
+          luas_bangunan?: string | null
           name?: string
           phone?: string | null
+          tahun_berdiri?: number | null
           updated_at?: string
         }
         Update: {
@@ -202,9 +378,13 @@ export type Database = {
           description?: string | null
           email?: string | null
           id?: string
+          jam_operasional?: string | null
+          kapasitas_jamaah?: number | null
           logo_url?: string | null
+          luas_bangunan?: string | null
           name?: string
           phone?: string | null
+          tahun_berdiri?: number | null
           updated_at?: string
         }
         Relationships: []
@@ -386,32 +566,82 @@ export type Database = {
       ruangan: {
         Row: {
           capacity: number | null
+          category: string | null
           created_at: string
           description: string | null
+          facilities_info: string | null
           id: string
           is_active: boolean
           name: string
+          price: number | null
+          rules: string | null
+          type: Database["public"]["Enums"]["room_type"]
           updated_at: string
         }
         Insert: {
           capacity?: number | null
+          category?: string | null
           created_at?: string
           description?: string | null
+          facilities_info?: string | null
           id?: string
           is_active?: boolean
           name: string
+          price?: number | null
+          rules?: string | null
+          type?: Database["public"]["Enums"]["room_type"]
           updated_at?: string
         }
         Update: {
           capacity?: number | null
+          category?: string | null
           created_at?: string
           description?: string | null
+          facilities_info?: string | null
           id?: string
           is_active?: boolean
           name?: string
+          price?: number | null
+          rules?: string | null
+          type?: Database["public"]["Enums"]["room_type"]
           updated_at?: string
         }
         Relationships: []
+      }
+      ruangan_gallery: {
+        Row: {
+          caption: string | null
+          created_at: string
+          id: string
+          image_url: string
+          ruangan_id: string
+          sort_order: number
+        }
+        Insert: {
+          caption?: string | null
+          created_at?: string
+          id?: string
+          image_url: string
+          ruangan_id: string
+          sort_order?: number
+        }
+        Update: {
+          caption?: string | null
+          created_at?: string
+          id?: string
+          image_url?: string
+          ruangan_id?: string
+          sort_order?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ruangan_gallery_ruangan_id_fkey"
+            columns: ["ruangan_id"]
+            isOneToOne: false
+            referencedRelation: "ruangan"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       schedule_events: {
         Row: {
@@ -442,6 +672,56 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      tugas: {
+        Row: {
+          assignee_id: string | null
+          column_id: Database["public"]["Enums"]["task_column"]
+          created_at: string
+          created_by: string | null
+          description: string | null
+          id: string
+          labels: string[] | null
+          priority: Database["public"]["Enums"]["task_priority"]
+          sort_order: number
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          assignee_id?: string | null
+          column_id?: Database["public"]["Enums"]["task_column"]
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          labels?: string[] | null
+          priority?: Database["public"]["Enums"]["task_priority"]
+          sort_order?: number
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          assignee_id?: string | null
+          column_id?: Database["public"]["Enums"]["task_column"]
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          labels?: string[] | null
+          priority?: Database["public"]["Enums"]["task_priority"]
+          sort_order?: number
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tugas_assignee_id_fkey"
+            columns: ["assignee_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       user_roles: {
         Row: {
@@ -497,6 +777,39 @@ export type Database = {
         }
         Relationships: []
       }
+      website_sections: {
+        Row: {
+          config_json: Json | null
+          created_at: string
+          id: string
+          is_visible: boolean
+          section_key: string
+          sort_order: number
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          config_json?: Json | null
+          created_at?: string
+          id?: string
+          is_visible?: boolean
+          section_key: string
+          sort_order?: number
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          config_json?: Json | null
+          created_at?: string
+          id?: string
+          is_visible?: boolean
+          section_key?: string
+          sort_order?: number
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       general_ledger_view: {
@@ -537,6 +850,16 @@ export type Database = {
         Args: { _user_id: string }
         Returns: boolean
       }
+      log_audit: {
+        Args: {
+          _action: string
+          _detail?: string
+          _metadata?: Json
+          _module: string
+          _user_id: string
+        }
+        Returns: undefined
+      }
     }
     Enums: {
       app_role:
@@ -546,6 +869,11 @@ export type Database = {
         | "bendahara"
         | "admin_konten"
       event_status: "draft" | "published" | "cancelled"
+      kegiatan_status: "dijadwalkan" | "berlangsung" | "selesai" | "dibatalkan"
+      kondisi_aset: "baik" | "rusak_ringan" | "rusak_berat" | "dalam_perbaikan"
+      room_type: "bookable" | "non_bookable"
+      task_column: "backlog" | "todo" | "in_progress" | "done"
+      task_priority: "low" | "medium" | "high"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -681,6 +1009,11 @@ export const Constants = {
         "admin_konten",
       ],
       event_status: ["draft", "published", "cancelled"],
+      kegiatan_status: ["dijadwalkan", "berlangsung", "selesai", "dibatalkan"],
+      kondisi_aset: ["baik", "rusak_ringan", "rusak_berat", "dalam_perbaikan"],
+      room_type: ["bookable", "non_bookable"],
+      task_column: ["backlog", "todo", "in_progress", "done"],
+      task_priority: ["low", "medium", "high"],
     },
   },
 } as const
